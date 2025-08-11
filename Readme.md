@@ -119,3 +119,42 @@ NOTE : Difference between kill and remove
 - `kill` stops the container but keeps it in the list of containers (it can be restarted).
 - `remove` deletes the container completely.
 
+
+
+# Docker Custom Image
+
+## Creating a Dockerfile
+```bash
+touch Dockerfile
+```
+
+```dockerfile
+FROM ubuntu
+
+# installing nodejs
+RUN apt update
+RUN apt install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_22.x -o /tmp/nodesource_setup.sh
+RUN bash /tmp/nodesource_setup.sh
+RUN apt install -y nodejs
+
+# copying the source code to docker image
+COPY index.js /home/app/index.js
+COPY package-lock.json /home/app/package-lock.json
+COPY package.json /home/app/package.json
+
+# my working directory
+WORKDIR /home/app
+RUN npm install
+```
+
+## Building the Docker Image
+```bash
+docker build -t my-node-app .
+```
+
+Now I can run the application in the container with the command 
+```bash
+npm run dev
+```
+this will start the application inside the container but will not expose the port to the host machine. To access the application from the host, I need to modify the Dockerfile to expose the port and then rebuild the image.
