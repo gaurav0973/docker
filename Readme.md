@@ -122,8 +122,8 @@ NOTE : Difference between kill and remove
 
 
 # Docker Custom Image
-
-## Creating a Dockerfile
+## UNOPTIMISED
+### Creating a Dockerfile
 ```bash
 touch Dockerfile
 ```
@@ -158,3 +158,38 @@ Now I can run the application in the container with the command
 npm run dev
 ```
 this will start the application inside the container but will not expose the port to the host machine. To access the application from the host, I need to modify the Dockerfile to expose the port and then rebuild the image.
+
+
+### Optimisation -1 :  make the images as small as possible
+```Dockerfile
+FROM node:20.17.0-alpine3.19
+
+# copying the source code to docker image
+COPY index.js /home/app/index.js
+COPY package-lock.json /home/app/package-lock.json
+COPY package.json /home/app/package.json
+
+# my working directory
+WORKDIR /home/app
+RUN npm install
+
+CMD [ "npm", "start" ]
+```
+
+### optimisation -2 :  
+ - try to use as few layers as possible
+ - order the commands to maximize cache usage
+
+```Dockerfile
+FROM node:20.17.0-alpine3.19
+
+WORKDIR /home/app
+# copying the source code to docker image
+COPY package-lock.json package-lock.json
+COPY package.json package.json
+RUN npm install
+
+
+COPY index.js index.js
+
+CMD [ "npm", "start" ]

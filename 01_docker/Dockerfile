@@ -1,11 +1,4 @@
-FROM ubuntu
-
-# installing nodejs
-RUN apt update
-RUN apt install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_22.x -o /tmp/nodesource_setup.sh
-RUN bash /tmp/nodesource_setup.sh
-RUN apt install -y nodejs
+FROM node:20.17.0-alpine3.19
 
 # copying the source code to docker image
 COPY index.js /home/app/index.js
@@ -15,3 +8,5 @@ COPY package.json /home/app/package.json
 # my working directory
 WORKDIR /home/app
 RUN npm install
+
+CMD [ "npm", "run", "dev" ]
