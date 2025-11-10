@@ -2,7 +2,7 @@
 
 This document provides a comprehensive overview of Docker images and hands-on practice routines for our projects.
 
-![Docker Images](./Images/docker_images.png)
+![](./Images/docker_images.png)
 
 ## Overview
 
