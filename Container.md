@@ -2,7 +2,7 @@
 
 This document provides a comprehensive overview of Docker containers and hands-on practice routines for our projects.
 
-![Docker Containers](https://github.com/gaurav0973/docker/blob/main/images/docker_containers.png)
+![](https://github.com/gaurav0973/docker/blob/main/images/docker_container.png)
 
 ## 🐳 📘 Docker Container Management Commands (Latest Version – v25+)
 
